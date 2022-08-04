@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
     @GetMapping("/test")
     public Message test() {
-        return new Message("Nma gap!!!");
+        return new Message(System.getProperty("os.name"));
     }
 
     private static class Message{
