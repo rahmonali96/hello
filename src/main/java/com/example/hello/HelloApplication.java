@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class HelloApplication {
     @GetMapping("/hello")
     public String test() {
-        return "Jenkins is working!";
+        return "Jenkins is working!!!";
     }
 
     public static void main(String[] args) {
