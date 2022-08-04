@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
     @GetMapping("/test")
     public Message test() {
-        return new Message(System.getProperty("os.name"));
+        return new Message("CI/CD is working!");
     }
 
     private static class Message{
