@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
     @GetMapping("/test")
     public Message test() {
-        return new Message("CI/CD is working!");
+        return new Message("Hello Jenkins");
     }
 
     private static class Message{
