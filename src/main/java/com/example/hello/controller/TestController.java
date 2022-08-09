@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.TimeZone;
+
 /**
  * Developed by Rahmonali Yoqubov
  * Email: rahmonaliyoqubov@gmail.com
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
     @GetMapping("/test")
     public Message test() {
-        return new Message("Hello Jenkins");
+        return new Message(TimeZone.getDefault().getID());
     }
 
     private static class Message{
