@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.TimeZone;
 
 /**
@@ -15,8 +16,8 @@ import java.util.TimeZone;
 @RestController
 public class TestController {
     @GetMapping("/test")
-    public Message test() {
-        return new Message(TimeZone.getDefault().getID());
+    public Message test(HttpServletRequest request) {
+        return new Message("Your ip: " + request.getLocalAddr());
     }
 
     private static class Message{
