@@ -5,8 +5,8 @@ server:
     key-store-type: PKCS12
     key-store: test.p12
     key-store-password: test1234
-spring:
-  security:
-    user:
-      name: admin
-      password: admin
+#spring:
+#  security:
+#    user:
+#      name: admin
+#      password: admin
