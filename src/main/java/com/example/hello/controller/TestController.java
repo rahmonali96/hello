@@ -17,7 +17,7 @@ import java.util.TimeZone;
 public class TestController {
     @GetMapping("/test")
     public Message test(HttpServletRequest request) {
-        return new Message("Your ip: " + request.getRemoteHost()+"\nUser-Agent: "+request.getHeader("User-Agent"));
+        return new Message("Your ip: " + request.getRemoteHost()+"   User-Agent: "+request.getHeader("User-Agent"));
     }
 
     private static class Message{
