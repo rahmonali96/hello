@@ -35,7 +35,6 @@ public class MyBot extends TelegramLongPollingBot {
 
     @SneakyThrows
     @Override
-    @Async
     public void onUpdateReceived(Update update) {
         if (update.hasMessage()){
             Message message = update.getMessage();
@@ -48,7 +47,7 @@ public class MyBot extends TelegramLongPollingBot {
                         List<Kusers> list = dbservice.getAllChatIds();
                         list.stream()
                                 .map(Kusers::getChatId)
-                                .forEach(s -> sendMessage(s, text));
+                                .forEach(s -> sendMessage(s, text.split(":")[1]));
                     } else {
                         perform(chatId, text);
                     }
@@ -56,7 +55,7 @@ public class MyBot extends TelegramLongPollingBot {
                     if (!text.equals("/start")){
                         if (text.length() < 100) {
                             dbservice.saveReq(message);
-                            sendMessage("542680353", chatId + text);
+                            sendMessage("542680353", chatId + ":" + text);
                             perform(chatId, text);
                         }   else{
                             sendMessage(chatId,"So'rov hajmi 100 tadan ko'p bo'lmasligi kerak!!!");
@@ -87,8 +86,7 @@ public class MyBot extends TelegramLongPollingBot {
     }
 
     @SneakyThrows
-    @Async
-    public synchronized void sendMessage(String chat_id, String text) {
+    public  void sendMessage(String chat_id, String text) {
         SendMessage message = new SendMessage();
         message.setChatId(chat_id);
         message.setText(text);
@@ -96,8 +94,7 @@ public class MyBot extends TelegramLongPollingBot {
 
     }
     @SneakyThrows
-    @Async
-    public synchronized void deleteMessage(String chatid, Integer messageid){
+    public void deleteMessage(String chatid, Integer messageid){
         DeleteMessage deleteMessage = new DeleteMessage();
         deleteMessage.setChatId(chatid);
         deleteMessage.setMessageId(messageid);
