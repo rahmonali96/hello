@@ -77,7 +77,7 @@ public class MyBot extends TelegramLongPollingBot {
 
     @Async
     synchronized void perform(String chatId, String text) throws InterruptedException, java.util.concurrent.ExecutionException, TimeoutException {
-        List<String> urls = fetcher.fetch(text).get(2, TimeUnit.SECONDS);
+        List<String> urls = fetcher.fetch(text).get();
         if (urls.size() != 0) {
             for (String url : urls) {
                 sendMessage(chatId, url);
