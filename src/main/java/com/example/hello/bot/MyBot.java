@@ -39,16 +39,11 @@ public class MyBot extends TelegramLongPollingBot {
         if (update.hasMessage()){
             Message message = update.getMessage();
             String chat_id = String.valueOf(message.getChatId());
-            String myid = "542680353";
             if (message.hasText()){
                 String text = message.getText();
-                if (chat_id.equals(myid)) {
-                    if (text.contains("send:")){
-                        dbservice.getAllChatIds()
-                                .stream()
-                                .map(Kusers::getChatid)
-                                .forEach(s -> sendMessage(s, text.split(":")[1]));
-                    }else{
+                if (!text.equals("/start")){
+                    if (text.length() < 100) {
+                        dbservice.saveReq(message);
                         List<String> urls = fetcher.fetch(text).get();
                         if (urls.size() != 0) {
                             for (String url : urls) {
@@ -58,28 +53,12 @@ public class MyBot extends TelegramLongPollingBot {
                             sendMessage(chat_id,"Hech narsa topilmadi");
                             sendMessage(chat_id,"Kitob nomini kiriting");
                         }
-                    }
-
-                }else{
-                    if (!text.equals("/start")){
-                        if (text.length() < 100) {
-                            dbservice.saveReq(message);
-                            List<String> urls = fetcher.fetch(text).get();
-                            if (urls.size() != 0) {
-                                for (String url : urls) {
-                                    sendMessage(chat_id, url);
-                                }
-                            }else{
-                                sendMessage(chat_id,"Hech narsa topilmadi");
-                                sendMessage(chat_id,"Kitob nomini kiriting");
-                            }
-                        }   else{
-                            sendMessage(chat_id,"So'rov hajmi 100 tadan ko'p bo'lmasligi kerak!!!");
-                            sendMessage(chat_id,"Kitob nomini kiriting");
-                        }
-                    }else{
+                    }   else{
+                        sendMessage(chat_id,"So'rov hajmi 100 tadan ko'p bo'lmasligi kerak!!!");
                         sendMessage(chat_id,"Kitob nomini kiriting");
                     }
+                }else{
+                    sendMessage(chat_id,"Kitob nomini kiriting");
                 }
 
             }else{
