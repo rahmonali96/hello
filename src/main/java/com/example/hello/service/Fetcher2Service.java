@@ -6,6 +6,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -27,18 +28,17 @@ public class Fetcher2Service {
     public Mono<List<String>> fetch(String q) {
         List<String> urls = new ArrayList<>();
         Pattern pattern = Pattern.compile("(http|https)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*.pdf");
-        AtomicReference<Matcher> matcher = new AtomicReference<>();
-        webClient
+        String res = webClient
                 .get()
                 .header("Accept-language", "en")
                 .attribute("q", normalize(q))
-                .exchangeToMono(clientResponse -> clientResponse.bodyToMono(String.class))
-                .subscribe(s -> {
-                    matcher.set(pattern.matcher(s));
-                    while (matcher.get().find()) {
-                        urls.add(matcher.get().group());
-                    }
-                });
+                .exchangeToMono(clientResponse -> clientResponse.bodyToMono(String.class)).block(Duration.ofSeconds(5));
+
+        assert res != null;
+        Matcher matcher = pattern.matcher(res);
+        while (matcher.find()) {
+            urls.add(matcher.group());
+        }
 
         return Mono.just(urls.stream()
                 .filter(s -> !s.contains("%"))
