@@ -15,6 +15,8 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 @Component
 @AllArgsConstructor
@@ -74,8 +76,8 @@ public class MyBot extends TelegramLongPollingBot {
     }
 
     @Async
-    void perform(String chatId, String text) throws InterruptedException, java.util.concurrent.ExecutionException {
-        List<String> urls = fetcher.fetch(text).get();
+    void perform(String chatId, String text) throws InterruptedException, java.util.concurrent.ExecutionException, TimeoutException {
+        List<String> urls = fetcher.fetch(text).get(2, TimeUnit.SECONDS);
         if (urls.size() != 0) {
             for (String url : urls) {
                 sendMessage(chatId, url);
