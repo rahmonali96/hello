@@ -20,11 +20,12 @@ import java.util.stream.Collectors;
 @Service
 @Async
 public class FetcherService {
+    CloseableHttpClient httpClient = HttpClients.createDefault();
     @SneakyThrows
     public CompletableFuture<List<String>> fetch(String q) {
         List<String> urls = new ArrayList<>();
         String url = String.format("https://www.google.com/search?q=%s", normalize(q).get());
-        CloseableHttpClient httpClient = HttpClients.createDefault();
+
         HttpGet httpGet = new HttpGet(url);
         httpGet.addHeader("Accept-language","en");
         try {
