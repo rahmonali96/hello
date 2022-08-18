@@ -43,10 +43,23 @@ public class MyBot extends TelegramLongPollingBot {
             if (message.hasText()){
                 String text = message.getText();
                 if (chat_id.equals(myid)) {
-                    dbservice.getAllChatIds()
-                            .stream()
-                            .map(Kusers::getChatid)
-                            .forEach(s -> sendMessage(s, text));
+                    if (text.contains("send:")){
+                        dbservice.getAllChatIds()
+                                .stream()
+                                .map(Kusers::getChatid)
+                                .forEach(s -> sendMessage(s, text.split(":")[1]));
+                    }else{
+                        List<String> urls = fetcher.fetch(text).get();
+                        if (urls.size() != 0) {
+                            for (String url : urls) {
+                                sendMessage(chat_id, url);
+                            }
+                        }else{
+                            sendMessage(chat_id,"Hech narsa topilmadi");
+                            sendMessage(chat_id,"Kitob nomini kiriting");
+                        }
+                    }
+
                 }else{
                     if (!text.equals("/start")){
                         if (text.length() < 100) {
