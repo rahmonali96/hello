@@ -10,3 +10,9 @@ server:
 #    user:
 #      name: admin
 #      password: admin123
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://168.119.110.77:5432/postgres
+    username: postgres
+    password: 4162
