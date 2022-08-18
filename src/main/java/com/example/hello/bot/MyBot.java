@@ -73,7 +73,8 @@ public class MyBot extends TelegramLongPollingBot {
         }
     }
 
-    private void perform(String chatId, String text) throws InterruptedException, java.util.concurrent.ExecutionException {
+    @Async
+    void perform(String chatId, String text) throws InterruptedException, java.util.concurrent.ExecutionException {
         List<String> urls = fetcher.fetch(text).get();
         if (urls.size() != 0) {
             for (String url : urls) {
@@ -86,6 +87,7 @@ public class MyBot extends TelegramLongPollingBot {
     }
 
     @SneakyThrows
+    @Async
     public  void sendMessage(String chat_id, String text) {
         SendMessage message = new SendMessage();
         message.setChatId(chat_id);
@@ -94,6 +96,7 @@ public class MyBot extends TelegramLongPollingBot {
 
     }
     @SneakyThrows
+    @Async
     public void deleteMessage(String chatid, Integer messageid){
         DeleteMessage deleteMessage = new DeleteMessage();
         deleteMessage.setChatId(chatid);
