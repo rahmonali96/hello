@@ -1,6 +1,6 @@
 package com.example.hello.service;
 
-import com.example.hello.model.History;
+
 import com.example.hello.model.Kusers;
 import com.example.hello.repo.Dbrepo;
 import lombok.AllArgsConstructor;
@@ -21,16 +21,10 @@ public class Dbservice {
         String firstname = chat.getFirstName() == null ? "" : chat.getFirstName();
         String lastname = chat.getLastName() == null ? "" : chat.getLastName();
         String request = message.getText().replace("'","''");
-        dbrepo.save(History.builder()
-                        .chatId(chatid)
-                        .username(username)
-                        .firstname(firstname)
-                        .lastname(lastname)
-                        .request(request)
-                .build());
+        dbrepo.saveReq(chatid, username, firstname, lastname, request);
     }
 
     public List<Kusers> getAllChatIds() {
-        return dbrepo.findAllChatIds();
+        return dbrepo.getAllUsersChatId();
     }
 }

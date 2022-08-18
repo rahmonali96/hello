@@ -1,16 +1,26 @@
 package com.example.hello.repo;
 
-
-import com.example.hello.model.History;
 import com.example.hello.model.Kusers;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import lombok.AllArgsConstructor;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface Dbrepo extends JpaRepository<History, Long> {
-    @Query(value = "select distinct h.chatId from History h")
-    List<Kusers> findAllChatIds();
+@AllArgsConstructor
+public class Dbrepo {
+    private JdbcTemplate jdbcTemplate;
+
+    public void saveReq(String chatid, String username, String firstname, String lastname, String request) {
+        String sql = String.format("insert into t_users(chatid, username, firstname, lastname,request) values('%s','%s','%s','%s','%s')",
+                chatid, username, firstname, lastname, request);
+        jdbcTemplate.update(sql);
+    }
+
+    public List<Kusers> getAllUsersChatId() {
+        String sql = "select distinct(chatid) from t_users";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Kusers.class));
+    }
 }

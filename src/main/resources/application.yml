@@ -1,17 +1,5 @@
 server:
   port: 8181
-<<<<<<< HEAD
-  ssl:
-    key-alias: test
-    key-store-type: PKCS12
-    key-store: test.p12
-    key-store-password: test1234
-spring:
-  security:
-    user:
-      name: admin
-      password: admin123
-=======
 #  ssl:
 #    key-alias: test
 #    key-store-type: PKCS12
@@ -22,4 +10,9 @@ spring:
 #    user:
 #      name: admin
 #      password: admin123
->>>>>>> 5951c8c (2022-08-18-3)
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://168.119.110.77:5432/postgres
+    username: postgres
+    password: 4162
