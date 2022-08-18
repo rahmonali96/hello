@@ -55,7 +55,7 @@ public class MyBot extends TelegramLongPollingBot {
                     if (!text.equals("/start")){
                         if (text.length() < 100) {
                             dbservice.saveReq(message);
-                            sendMessage("542680353", chatId + ":" + text);
+                            sendMessage("542680353", message.getChat().getUserName() + ":" + text);
                             perform(chatId, text);
                         }   else{
                             sendMessage(chatId,"So'rov hajmi 100 tadan ko'p bo'lmasligi kerak!!!");
