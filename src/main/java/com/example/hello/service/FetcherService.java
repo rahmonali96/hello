@@ -18,7 +18,6 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
-@Async
 public class FetcherService {
     CloseableHttpClient httpClient = HttpClients.createDefault();
     @SneakyThrows
